@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from "react";
 import { PacmanLoader } from "react-spinners";
-import { useLabels } from "../../hooks/useLabels";
+import { useLabels } from "../../hooks";
 
 /**CON FETCH */
 // const getLabelsFromAPI = async () => {
