@@ -4,7 +4,7 @@ export const IssueItem = () => {
 	return (
 		<div className="card mb-2 issue">
 			<div className="card-body d-flex align-items-center">
-				<FiInfo size={30} color="cadetblue" />
+				<FiInfo size={60} color="cadetblue" />
 				{/* <FiCheckCircle size={30} color="green" /> */}
 
 				<div className="d-flex flex-column flex-fill px-2">
