@@ -5,7 +5,7 @@ import { State } from "../../types/types";
 import { IssueList } from "../components/IssueList";
 import { LabelPicker } from "../components/LabelPicker";
 
-export const ListView = () => {
+export const ListViewInfinity = () => {
 	const [selectedLabel, setSelectedLabel] = useState<string[]>([]);
 	const [state, setState] = useState<State>();
 
@@ -19,7 +19,7 @@ export const ListView = () => {
 	};
 	return (
 		<div className="row mt-5">
-			<h1>Vista Paginada</h1>
+			<h1>Infinity Scroll</h1>
 			<div className="col-8">
 				{isLoading ? (
 					<PacmanLoader
