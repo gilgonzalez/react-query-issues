@@ -16,10 +16,32 @@ export const GitApp: FC = () => {
 				Git Issues <small>Seguimiento de problemas</small>{" "}
 			</h1>
 			{pathname === WHEREIAM.List && (
-				<Link to={"/issues/listinfinity"}>Ir a Vista Scroll Infinito</Link>
+				<button className="btn btn-danger btn-sm p-2" type="button">
+					<Link
+						style={{
+							textDecoration: "none",
+							color: "white",
+							fontWeight: "bold",
+						}}
+						to={"/issues/listinfinity"}
+					>
+						Ir a Vista Scroll Infinito
+					</Link>
+				</button>
 			)}
 			{pathname === WHEREIAM.ListInfinite && (
-				<Link to={"/issues/list"}>Ir a Vista Paginada</Link>
+				<button className="btn btn-primary btn-sm p-2" type="button">
+					<Link
+						style={{
+							textDecoration: "none",
+							color: "white",
+							fontWeight: "bold",
+						}}
+						to={"/issues/list"}
+					>
+						Ir a Vista Paginada
+					</Link>
+				</button>
 			)}
 			<Outlet />
 		</div>
