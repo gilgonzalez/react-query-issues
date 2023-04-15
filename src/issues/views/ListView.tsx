@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { PacmanLoader } from "react-spinners";
 import { useIssues } from "../../hooks";
+import { State } from "../../types/types";
 import { IssueList } from "../components/IssueList";
 import { LabelPicker } from "../components/LabelPicker";
 
 export const ListView = () => {
 	const [selectedLabel, setSelectedLabel] = useState<string[]>([]);
+	const [state, setState] = useState<State>();
 
-	const { issuesQuery } = useIssues();
+	const token = import.meta.env.VITE_APP_GITHUB_TOKEN;
+	console.log(token);
 
+	const { issuesQuery } = useIssues({ state, labels: selectedLabel });
 	const { isLoading } = issuesQuery;
 
 	const onChangeLabel = (labelName: string) => {
@@ -28,7 +32,11 @@ export const ListView = () => {
 						data-testid="loader"
 					/>
 				) : (
-					<IssueList issues={issuesQuery?.data || []} />
+					<IssueList
+						issues={issuesQuery?.data || []}
+						state={state}
+						onStateChange={(newState) => setState(newState)}
+					/>
 				)}
 			</div>
 

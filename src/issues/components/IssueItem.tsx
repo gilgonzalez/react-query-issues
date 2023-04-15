@@ -54,6 +54,14 @@ export const IssueItem: React.FC<Props> = ({ issue }) => {
 							{issue.user.login}
 						</span>
 					</span>
+          <div>
+            {
+              issue.labels.map(label => (
+                <span key={label.id} className="badge rounded-pill m-1" 
+                style={{backgroundColor:`#${label.color}90 `, color:'black', padding:'0.5rem', border: `1px solid black`}}> {label.name}</span>
+              ))
+            }
+          </div>
 				</div>
 
 				<div className='d-flex align-items-center'>

@@ -4,10 +4,9 @@ import { sleep } from "../helpers/sleep";
 import { Label } from "../types/types";
 
 const getLabelsFromAPI = async (): Promise<Label[]> => {
-	const { data } = await gitHubAPI.get<Label[]>("/labels");
+	const { data } = await gitHubAPI.get<Label[]>("/labels?per_page=100");
 
 	await sleep(2);
-	console.log(data);
 	return data;
 };
 
