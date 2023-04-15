@@ -9,9 +9,6 @@ export const ListView = () => {
 	const [selectedLabel, setSelectedLabel] = useState<string[]>([]);
 	const [state, setState] = useState<State>();
 
-	const token = import.meta.env.VITE_APP_GITHUB_TOKEN;
-	console.log(token);
-
 	const { issuesQuery } = useIssues({ state, labels: selectedLabel });
 	const { isLoading } = issuesQuery;
 
