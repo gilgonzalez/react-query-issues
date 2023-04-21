@@ -1,10 +1,11 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { PacmanLoader } from "react-spinners";
 import { useIssue } from "../../hooks";
 import { IssueComment } from "../components/IssueComment";
 
 export const IssueView = () => {
 	const { id = 0 } = useParams();
+	const navigate = useNavigate();
 
 	const { issueQuery, issueCommentsQuery } = useIssue(+id);
 	const { data, isLoading } = issueQuery;
@@ -18,7 +19,7 @@ export const IssueView = () => {
 	return (
 		<div className="row mb-5">
 			<div className="col-12 mb-3">
-				<Link to='./issues/list'>Go Back</Link>
+				<Link to={-1}>Go Back</Link>
 			</div>
 			{/* Primer comentario */}
 			<IssueComment issue={data} />

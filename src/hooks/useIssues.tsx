@@ -1,41 +1,58 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { gitHubAPI } from "../api/gitHubAPI";
-import { sleep } from "../helpers/sleep";
 import { IssuesResult, State } from "../types/types.d";
 
 interface Props {
-  state?:State,
-  labels : string[]
+	state?: State;
+	labels: string[];
+	page?: number;
 }
 
-const getIssuesFromAPI = async (labels: string[] ,state? : State ): Promise<IssuesResult[]> => {
-  await sleep(2)
+const getIssuesFromAPI = async ({
+	state,
+	labels,
+	page = 1,
+}: Props): Promise<IssuesResult[]> => {
+	const params = new URLSearchParams();
 
-  const params = new URLSearchParams();
+	if (state) params.append("state", state);
+	if (labels.length > 0) {
+		const labelString = labels.join(",");
+		params.append("labels", labelString);
+	}
 
-  if (state) params.append('state', state)
-  if (labels.length > 0) {
-    const labelString = labels.join(',')
-    params.append('labels', labelString)
-  }
+	params.append("page", page.toString());
+	params.append("per_page", "5");
 
-  params.append('page', '1')
-  params.append('per_page', '5')
-
-	const { data } = await gitHubAPI.get<IssuesResult[]>("/issues", {params});
+	const { data } = await gitHubAPI.get<IssuesResult[]>("/issues", { params });
 
 	return data;
 };
 
+export const useIssues = ({ state, labels }: Props) => {
+	const [page, setPage] = useState(1);
 
-export const useIssues = ({state, labels} : Props) => {
+	useEffect(() => {
+		setPage(1);
+	}, [state, labels]);
+
 	const issuesQuery = useQuery(
-    ["issues", {state, labels }], 
-    ()=>getIssuesFromAPI( labels, state),
-    {
-      staleTime : 1000*60
-    }
-  );
+		["issues", { state, labels, page }],
+		() => getIssuesFromAPI({ labels, state, page }),
+		{
+			staleTime: 1000 * 60,
+		},
+	);
 
-	return { issuesQuery };
+	const nextPage = () => {
+		if (issuesQuery.data?.length === 0) return;
+		setPage(page + 1);
+	};
+
+	const prevPage = () => {
+		if (page > 1) setPage(page - 1);
+	};
+
+	return { issuesQuery, page, nextPage, prevPage };
 };
